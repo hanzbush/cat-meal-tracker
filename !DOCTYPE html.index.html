@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Meal Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .meals {
+            display: inline-block;
+            text-align: left;
+        }
+        .progress {
+            font-size: 2em;
+            margin: 20px;
+        }
+        .reset-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cat Meal Tracker 🐱</h1>
+
+    <!-- Progress Bar (Cat with hearts) -->
+    <div class="progress" id="progress">🐱🤍🤍🤍🤍🤍🤍🤍🤍</div>
+
+    <!-- Meal Checkboxes -->
+    <div class="meals">
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 3:00 AM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 6:00 AM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 7:30/8:00 AM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 12:00 PM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 4:30/5:00 PM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 7:00 PM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 9:00 PM Meal</label><br>
+        <label><input type="checkbox" class="meal-checkbox" onclick="updateProgress()"> 11:00 PM Meal</label><br>
+    </div>
+
+    <!-- Reset Button -->
+    <button class="reset-btn" onclick="resetProgress()">Reset Progress</button>
+
+    <script>
+        // Function to update the progress based on checkboxes
+        function updateProgress() {
+            let checkedCount = document.querySelectorAll('.meal-checkbox:checked').length;
+            let hearts = '🐱' + '❤️'.repeat(checkedCount) + '🤍'.repeat(8 - checkedCount);
+            document.getElementById('progress').innerHTML = hearts;
+        }
+
+        // Function to reset all checkboxes and progress
+        function resetProgress() {
+            document.querySelectorAll('.meal-checkbox').forEach(cb => cb.checked = false);
+            updateProgress(); // Reset the hearts
+        }
+
+        // Function to reset progress automatically at midnight
+        function autoResetAtMidnight() {
+            setInterval(function () {
+                let now = new Date();
+                if (now.getHours() === 0 && now.getMinutes() === 0) { // At midnight
+                    resetProgress();
+                }
+            }, 60000); // Check every minute
+        }
+
+        // Initialize the daily reset
+        autoResetAtMidnight();
+    </script>
+</body>
+</html>
